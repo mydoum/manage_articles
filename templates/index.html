@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<head>
+
+</head>
+<body>
+    <form method="GET" action="">
+        <label>Which ressources would you like to see:</label>
+        <br>
+        <input type="radio" name="category" value="ALL" checked>All Elements
+        <br>
+        <input type="radio" name="category" value="AR">Articles
+        <br>
+        <input type="radio" name="category" value="IN">Incidents
+        <br>
+        <input type="radio" name="category" value="RE">Ressources
+        <br>
+        <input type="radio" name="category" value="DI">Discussions
+        <br>
+        <input type="submit" value="filter" />
+    </form>
+    <h1>Liste des tickets</h1>
+
+    {% for elem in objects %}
+
+    <h3>
+        {{ elem.name }}
+    </h3>
+    <p> {{ elem.description }}</p>
+
+    {% endfor %}
+</body>
+</html>
