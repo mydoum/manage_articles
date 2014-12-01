@@ -19,5 +19,5 @@ urlpatterns = patterns('',
     url(r'^accounts/profile/$', profile),
 
     #post
-    url(r'^poster/$', include('poster.urls')),
+    url(r'^post/$', include('post.urls')),
 )

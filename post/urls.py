@@ -1,6 +1,6 @@
 from django.conf.urls import patterns, include, url
-from views import create
+from views import post_new
 
 urlpatterns = patterns('',
-    url(r'^$', create, name="create"),
+    url(r'^$', post_new, name="post_new"),
 )

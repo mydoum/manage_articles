@@ -19,7 +19,7 @@
                     <a href="#">Trombinoscope</a>
                 </li>
                 <li>
-                    <a href="../poster">Poster</a>
+                    <a href="../post">Poster</a>
                 </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
@@ -74,6 +74,7 @@
                 <button type="submit" value="filter" class="btn btn-success">Filtrer</button>
             </form>
         </div>
+    <a href="{% url 'post.views.post_new' %}" class="top-menu"><span class="glyphicon glyphicon-plus"></span> Poster</a>
         <!-- Articles view-->
         <div id="btn_category" class="col-md-8 col-md-offset-2">
             <h1>Liste des tickets</h1>
