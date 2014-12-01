@@ -10,10 +10,9 @@ https://docs.djangoproject.com/en/1.7/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
-BASE_DIR = os.path.dirname(os.path.dirname(__file__))
+from django.conf.global_settings import STATICFILES_DIRS
 
-# Absolue path
-project_path = os.path.dirname(os.path.abspath(__file__))
+BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 
 # Quick-start development settings - unsuitable for production
@@ -22,13 +21,10 @@ project_path = os.path.dirname(os.path.abspath(__file__))
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'o8jhh7&vtv2vkb^u-h%1a&@_73gtkrcyz7xow19-w@1*f**_7z'
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
 TEMPLATE_DEBUG = True
 
 TEMPLATE_DIRS = (
-    '/Users/alonso/Documents/Study/Projects/Django/intranet/templates',
+    BASE_DIR + '/templates',
 )
 
 ALLOWED_HOSTS = []
@@ -44,6 +40,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'index',
+    'poster',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -64,16 +61,12 @@ WSGI_APPLICATION = 'intranet.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.7/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'intranet',
-        'USER': 'root',
-        'PASSWORD': '',
-        'HOST': '127.0.0.1',
-        'PORT': '3306',
-    }
-}
+# the dev and prod settings are separated
+try:
+    from local_settings import *
+except:
+
+    pass
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.7/topics/i18n/
@@ -91,5 +84,12 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
-STATIC_ROOT = project_path + '../templates/static'
+STATICFILES_DIRS = (
+    '/Users/alonso/Documents/Study/Projects/Django/intranet/index/static',
+)
+
+STATIC_ROOT = BASE_DIR + '/templates/static/'
 STATIC_URL = '/static/'
+
+# Custom after-login URL
+LOGIN_REDIRECT_URL = '/home'

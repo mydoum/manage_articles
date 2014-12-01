@@ -1,10 +1,9 @@
 from django.shortcuts import render
-from django.http import HttpResponse
-from models import Articles
+from models import Article
 
 # Create your views here.
-def index(request):
-    objects = Articles.objects.all()
+def home(request):
+    objects = Article.objects.all()
     if request.method == 'GET':
         if 'category' in request.GET:
             if request.GET['category'] == 'AR':
@@ -16,5 +15,8 @@ def index(request):
             elif request.GET['category'] == 'DI':
                 objects = objects.filter(category='DI')
             else:
-                objects = Articles.objects.all()
+                objects = Article.objects.all()
     return render(request, 'index.html', {'objects': objects})
+
+def profile(request):
+    return render(request, 'registration/profile.html', {})
