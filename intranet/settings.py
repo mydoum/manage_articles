@@ -85,7 +85,9 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
 STATICFILES_DIRS = (
-    '/Users/alonso/Documents/Study/Projects/Django/intranet/index/static',
+    BASE_DIR + '/index/static',
+    BASE_DIR + '/post/static',
+
 )
 
 STATIC_ROOT = BASE_DIR + '/templates/static/'

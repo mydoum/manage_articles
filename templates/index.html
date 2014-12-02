@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <head>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+    <meta charset="UTF-8">
+    <meta name="robots" content="noindex, nofollow">
+
     <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}/library/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}/css/style_index.css">
 </head>
@@ -84,7 +86,7 @@
                 <h3>
                     {{ elem.name }}
                 </h3>
-                <p> {{ elem.description }}</p>
+                <p> {{ elem.description | safe }}</p>
 
             {% endfor %}
         </div>
