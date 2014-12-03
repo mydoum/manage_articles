@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="robots" content="noindex, nofollow">
+
+    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}/library/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}/css/style_news.css">
+</head>
+<body>
+    {% include "menu.html" %}
+
+
+    <!-- feeds -->
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+
+    google.load("feeds", "1");
+
+        function initialize() {
+            var feed = new google.feeds.Feed("http://www.paris.fr/portail/accueil/Portal.lut?id=24329&image=1&page=rssprovider&page_id=1&service=portlet");
+            feed.setNumEntries(20);
+            feed.load(function(result) {
+                if (!result.error) {
+                    var container = document.getElementById("feed");
+                    for (var i = 0; i < result.feed.entries.length; i++) {
+                        var entry = result.feed.entries[i];
+                        var div = document.createElement("div");
+                        div.appendChild(document.createTextNode(entry.title));
+                        container.appendChild(div);
+                    }
+                }
+            });
+        }
+        google.setOnLoadCallback(initialize);
+
+    </script>
+    <br>
+    <br>
+    <br>
+    <br>
+    <div id="feed"></div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="{{ STATIC_URL }}/library/bootstrap/js/bootstrap.min.js"></script>
+</body>
+</html>

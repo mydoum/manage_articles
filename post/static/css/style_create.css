@@ -5,3 +5,12 @@
 #title_block {
     margin-bottom: 20px;
 }
+
+#valid_btn {
+    float: right;
+}
+
+#valid_radio_btn {
+    margin-top: 10px;
+    padding-bottom: 35px;
+}
