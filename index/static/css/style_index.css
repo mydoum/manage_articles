@@ -15,3 +15,25 @@
 body {
     background-color: #CCE8CF;
 }
+
+.articles {
+    border: 1px solid gainsboro;
+    margin-bottom: 15px;
+}
+
+.article_description {
+    border-top: 1px solid gainsboro;
+    height: 3em;
+    overflow: hidden;
+}
+
+.article_title {
+    text-align: center;
+    color: #337ab7;
+}
+
+#objects_title {
+    padding-top: 10px;
+    padding-bottom: 12px;
+}
+

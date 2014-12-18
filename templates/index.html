@@ -5,6 +5,10 @@
 
     <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}/library/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}/css/style_index.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="{{ STATIC_URL }}/library/bootstrap/js/bootstrap.min.js"></script>
+
 </head>
 <body>
     {% include "menu.html" %}
@@ -22,45 +26,104 @@
                     </button>
                 </span>
             </div>
-            <!-- /input-group -->
         </div>
+
+        <!-- /input-group -->
         <div id="btn_category" class="col-md-10 col-md-offset-2">
             <form method="GET" action="">
                 <br>
-                <label class="btn btn-primary btn-xs">
-                    <input type="radio" name="category" value="ALL" checked> Tous
+                <label class="btn btn-primary btn-sm col-md-offset-2">
+                    <input onclick="request()" type="radio" name="category" value="ALL" checked> Tous
                 </label>
-                <label class="btn btn-primary btn-xs">
-                    <input type="radio" name="category" value="AR"> Articles
+                <label class="btn btn-primary btn-sm">
+                    <input onclick="request()" type="radio" name="category" value="AR"> Articles
                 </label>
-                <label class="btn btn-primary btn-xs">
-                    <input type="radio" name="category" value="IN"> Incidents
+                <label class="btn btn-primary btn-sm">
+                    <input onclick="request()" type="radio" name="category" value="IN"> Incidents
                 </label>
-                <label class="btn btn-primary btn-xs">
-                    <input type="radio" name="category" value="RE"> Ressources
+                <label class="btn btn-primary btn-sm">
+                    <input onclick="request()" type="radio" name="category" value="RE"> Ressources
                 </label>
-                <label class="btn btn-primary btn-xs">
-                    <input type="radio" name="category" value="DI"> Discussions
+                <label class="btn btn-primary btn-sm">
+                    <input onclick="request()" type="radio" name="category" value="DI"> Discussions
                 </label>
-                <button type="submit" value="filter" class="btn btn-success">Filtrer</button>
             </form>
         </div>
-    <a href="{% url 'post.views.post_new' %}" class="top-menu"><span class="glyphicon glyphicon-plus"></span> Poster</a>
+
+        <a href="{% url 'post.views.post_new' %}" class="top-menu"><span class="glyphicon glyphicon-plus"></span> Poster</a>
+
+        <!-- Used by JS, creating the DOM from XML articles-->
+
+
         <!-- Articles view-->
         <div id="btn_category" class="col-md-8 col-md-offset-2">
-            <h1>Liste des tickets</h1>
-
-            {% for elem in objects %}
-
-                <h3>
-                    {{ elem.name }}
-                </h3>
-                <p> {{ elem.description | safe }}</p>
-
-            {% endfor %}
+            <h1 id="objects_title">Liste des Objets</h1>
+            <div id="output"></div>
         </div>
+
+        <!-- AJAX method to get a dynamic update of the articles -->
+        <script>
+            function deploy() {
+                var result = this.responseXML;
+
+                var nodes = result.getElementsByTagName("article");
+                var main = document.createElement("div")
+                var cn_node, desc_node
+                var art, cn, desc;
+
+                for (var i = 0; i < nodes.length; i++) {
+                    art = document.createElement("div");
+                    cn_node = document.createElement("div");
+                    desc_node = document.createElement("div");
+                    cn = document.createTextNode(nodes[i].getElementsByTagName("title")[0].childNodes[0].nodeValue);
+                    desc = document.createTextNode(nodes[i].getElementsByTagName("desc")[0].childNodes[0].nodeValue);
+
+                    cn_node.appendChild(cn);
+                    desc_node.appendChild(desc);
+                    art.appendChild(cn_node);
+                    art.appendChild(desc_node);
+                    main.appendChild(art);
+                }
+
+                // Delete all articles
+                var del = document.getElementById("output");
+                del.innerHTML = '';
+
+                document.getElementById("output").appendChild(main);
+            }
+
+            function request() {
+                var xhr = new XMLHttpRequest();
+
+                xhr.onload = deploy;
+
+                // The file we get is sent inside articles.xml by django (index.views)
+                xhr.open("GET", "http://localhost:8000/home/?category=" + document.querySelector('input[name="category"]:checked').value, true);
+                xhr.send(null);
+            }
+
+            //launch the request at the loading of the page
+            $(document).ready(request());
+        </script>
+
+        <!-- Dynamic resizing of the articles when we clic on them -->
+        <script>
+            $('.articles').click(function () {
+                if ($(this).children('.article_description').height() > "45") {
+                    $(this).children('.article_description').animate({height: "3em"}, 300);
+                }
+                else {
+                    $(this).children('.article_description').css('height', 'auto');
+                    var fullHeight = $(this).children('.article_description').height();
+
+                    //We set the height to reducedHeight to prepare it for the animation
+                    $(this).children('.article_description').height("3em");
+
+                    // We animate from reducedHeight to fullHeight
+                    $(this).children('.article_description').animate({height: fullHeight}, 300);
+                }
+            });
+        </script>
     </div>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <script src="{{ STATIC_URL }}/library/bootstrap/js/bootstrap.min.js"></script>
 </body>
 </html>

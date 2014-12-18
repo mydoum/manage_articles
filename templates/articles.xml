@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+    {% for elem in objects %}
+        <article class="articles">
+            <title class="article_title"> {{ elem.name }} </title>
+            <desc class="article_description"> {{ elem.description | safe }}</desc>
+        </article>
+    {% endfor %}
+</root>
