@@ -79,9 +79,15 @@
                     desc = document.createTextNode(nodes[i].getElementsByTagName("desc")[0].childNodes[0].nodeValue);
 
                     cn_node.appendChild(cn);
+                    cn_node.setAttribute("class", "article_title");
+
                     desc_node.appendChild(desc);
+                    desc_node.setAttribute("class", "article_description");
+
                     art.appendChild(cn_node);
                     art.appendChild(desc_node);
+                    art.setAttribute("class", "articles");
+
                     main.appendChild(art);
                 }
 
