@@ -17,7 +17,6 @@ def home(request):
                 objects = objects.filter(category='DI')
             else:
                 objects = Article.objects.all()
-            return render(request, 'articles.xml', {'objects': objects}, content_type="application/xml")
     return render(request, 'index.html', {'objects': objects})
 
 def profile(request):
