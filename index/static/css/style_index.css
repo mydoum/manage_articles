@@ -30,6 +30,7 @@ body {
 .article_title {
     text-align: center;
     color: #337ab7;
+    display: block;
 }
 
 #objects_title {

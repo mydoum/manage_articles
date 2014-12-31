@@ -47,6 +47,7 @@
                 <label class="btn btn-primary btn-sm">
                     <input onclick="request()" type="radio" name="category" value="DI"> Discussions
                 </label>
+                <input type="submit" value="Save">
             </form>
         </div>
 
@@ -56,61 +57,15 @@
 
 
         <!-- Articles view-->
-        <div id="btn_category" class="col-md-8 col-md-offset-2">
+        <div class="col-md-8 col-md-offset-2">
             <h1 id="objects_title">Liste des Objets</h1>
-            <div id="output"></div>
+            {% for elem in objects %}
+            <article class="articles">
+                <title class="article_title"> {{ elem.name }} </title>
+                <desc class="article_description"> {{ elem.description | safe }}</desc>
+            </article>
+            {% endfor %}
         </div>
-
-        <!-- AJAX method to get a dynamic update of the articles -->
-        <script>
-            function deploy() {
-                var result = this.responseXML;
-
-                var nodes = result.getElementsByTagName("article");
-                var main = document.createElement("div")
-                var cn_node, desc_node
-                var art, cn, desc;
-
-                for (var i = 0; i < nodes.length; i++) {
-                    art = document.createElement("div");
-                    cn_node = document.createElement("div");
-                    desc_node = document.createElement("div");
-                    cn = document.createTextNode(nodes[i].getElementsByTagName("title")[0].childNodes[0].nodeValue);
-                    desc = document.createTextNode(nodes[i].getElementsByTagName("desc")[0].childNodes[0].nodeValue);
-
-                    cn_node.appendChild(cn);
-                    cn_node.setAttribute("class", "article_title");
-
-                    desc_node.appendChild(desc);
-                    desc_node.setAttribute("class", "article_description");
-
-                    art.appendChild(cn_node);
-                    art.appendChild(desc_node);
-                    art.setAttribute("class", "articles");
-
-                    main.appendChild(art);
-                }
-
-                // Delete all articles
-                var del = document.getElementById("output");
-                del.innerHTML = '';
-
-                document.getElementById("output").appendChild(main);
-            }
-
-            function request() {
-                var xhr = new XMLHttpRequest();
-
-                xhr.onload = deploy;
-
-                // The file we get is sent inside articles.xml by django (index.views)
-                xhr.open("GET", "http://localhost:8000/home/?category=" + document.querySelector('input[name="category"]:checked').value, true);
-                xhr.send(null);
-            }
-
-            //launch the request at the loading of the page
-            $(document).ready(request());
-        </script>
 
         <!-- Dynamic resizing of the articles when we clic on them -->
         <script>
