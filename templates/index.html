@@ -61,7 +61,7 @@
             <h1 id="objects_title">Liste des Objets</h1>
             {% for elem in objects %}
             <article class="articles">
-                <title class="article_title"> {{ elem.name }} </title>
+                <h3 class="article_title"> {{ elem.name }} </h3>
                 <desc class="article_description"> {{ elem.description | safe }}</desc>
             </article>
             {% endfor %}
